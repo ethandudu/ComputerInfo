@@ -12,6 +12,8 @@ namespace ComputerInfo.LibPcComponent
         private int m_iWorkLoad;
         private int m_iTemperature;
         private int m_iPCIeSlot;
+        private string m_sDeviceID;
+        private string m_sVideoProcessor;
         private RAM m_oRam;
         private GraphicAPI m_oGraphicAPI;
 
@@ -65,6 +67,18 @@ namespace ComputerInfo.LibPcComponent
         {
             get { return m_oGraphicAPI; }
             set { m_oGraphicAPI = value; }
+        }
+
+        public string DeviceID
+        {
+            get { return m_sDeviceID; }
+            set { m_sDeviceID = value; }
+        }
+
+        public string VideoProcessor
+        {
+            get { return m_sVideoProcessor; }
+            set { m_sVideoProcessor = value; }
         }
 
         #endregion
