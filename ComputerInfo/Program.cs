@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ComputerInfo.LibSvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,8 @@ namespace ComputerInfo
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new Form1());
+            SvcOs oSvcOS = new SvcOs();
+            Console.WriteLine(oSvcOS.GetTextInfo());
         }
     }
 }
