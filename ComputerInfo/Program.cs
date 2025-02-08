@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ComputerInfo
 {
@@ -11,7 +13,7 @@ namespace ComputerInfo
     {
         // Constant (-1) to indicate that an integer value is not set
         public const int NOT_SET = -1;
-        
+
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
@@ -20,16 +22,34 @@ namespace ComputerInfo
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new Form1());
+
             SvcOs oSvcOS = new SvcOs();
-            Console.WriteLine(oSvcOS.GetTextInfo());
-            Console.WriteLine(oSvcOS.GetXmlElement().OuterXml);
             SvcBattery oSvcBattery = new SvcBattery();
-            Console.WriteLine(oSvcBattery.GetTextInfo());
-            Console.WriteLine(oSvcBattery.GetXmlElement().OuterXml);
             SvcRAM oSvcRAM = new SvcRAM();
-            Console.WriteLine(oSvcRAM.GetTextInfo());
-            Console.WriteLine(oSvcRAM.GetXmlElement().OuterXml);
+
+            XmlDocument oXmlDocOS = new XmlDocument();
+            oXmlDocOS.AppendChild(oXmlDocOS.ImportNode(oSvcOS.GetXmlElement(), true));
+
+            XmlDocument oXmlDocBattery = new XmlDocument();
+            oXmlDocBattery.AppendChild(oXmlDocBattery.ImportNode(oSvcBattery.GetXmlElement(), true));
+
+            XmlDocument oXmlDocRAM = new XmlDocument();
+            oXmlDocRAM.AppendChild(oXmlDocRAM.ImportNode(oSvcRAM.GetXmlElement(), true));
+
+            XmlDocument oXmlDoc = XmlHelper.MergeXmlDocuments(oXmlDocOS, oXmlDocBattery, oXmlDocRAM);
+
+            // Formatted XML
+            StringBuilder oStringBuilder = new StringBuilder();
+            XmlWriterSettings oXmlWriterSettings = new XmlWriterSettings();
+            oXmlWriterSettings.Indent = true;
+            oXmlWriterSettings.IndentChars = "  ";
+            using (XmlWriter oXmlWriter = XmlWriter.Create(oStringBuilder, oXmlWriterSettings))
+            {
+                oXmlDoc.WriteTo(oXmlWriter);
+            }
+
+            FrmMain oFrmMain = new FrmMain(oStringBuilder.ToString());
+            Application.Run(oFrmMain);
         }
     }
 }
