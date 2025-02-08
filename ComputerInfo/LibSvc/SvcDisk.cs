@@ -122,6 +122,7 @@ namespace ComputerInfo.LibSvc
         {
             // Creates a new tree node
             TreeNode oTreeNode = new TreeNode("Disks");
+            oTreeNode.Tag = this;
 
             // Add each disk to the tree node
             foreach (Disk oDisk in m_aoDisks)

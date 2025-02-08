@@ -10,6 +10,12 @@ using System.Xml;
 
 namespace ComputerInfo.LibSvc
 {
+    enum Manufacturer
+    {
+        AMD,
+        INTEL,
+        UNKNOWN,
+    }
     internal class SvcCPU : BaseSvc
     {
         private CPU[] m_aoCPUs;
@@ -174,6 +180,25 @@ namespace ComputerInfo.LibSvc
                 iIndex++;
             }
             return aoCPUs;
+        }
+
+        public static Manufacturer GetManufacturer()
+        {
+            ManagementObjectSearcher oSearcher = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+            ManagementObjectCollection oCollection = oSearcher.Get();
+            foreach (ManagementObject oObject in oCollection)
+            {
+                string sManufacturer = oObject["Manufacturer"].ToString();
+                if (sManufacturer.Contains("Intel"))
+                {
+                    return Manufacturer.INTEL;
+                }
+                else if (sManufacturer.Contains("AMD"))
+                {
+                    return Manufacturer.AMD;
+                }
+            }
+            return Manufacturer.UNKNOWN;
         }
 
         #endregion
