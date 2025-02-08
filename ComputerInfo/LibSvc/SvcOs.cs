@@ -47,4 +47,6 @@ namespace ComputerInfo.LibSvc
             throw new NotImplementedException();
         }
     }
+
+    #endregion
 }
