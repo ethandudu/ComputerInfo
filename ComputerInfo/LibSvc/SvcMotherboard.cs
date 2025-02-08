@@ -66,6 +66,8 @@ namespace ComputerInfo.LibSvc
         {
             throw new NotImplementedException();
         }
+        // ...
+
         public static Motherboard GetMotherboard()
         {
             ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_BaseBoard");
@@ -75,7 +77,16 @@ namespace ComputerInfo.LibSvc
                 oMotherboard.Name = queryObj["Product"].ToString();
                 oMotherboard.Vendor = queryObj["Manufacturer"].ToString();
                 oMotherboard.Serial = queryObj["SerialNumber"].ToString();
-                oMotherboard.BiosVersion = queryObj["Version"].ToString();
+
+                searcher = new ManagementObjectSearcher("SELECT BIOSVersion FROM Win32_BIOS");
+                foreach (ManagementObject queryObjBios in searcher.Get())
+                {
+                    Object oBiosVersion = queryObjBios["BIOSVersion"];
+                    if (oBiosVersion != null)
+                    {
+                        oMotherboard.BiosVersion = ((string[])oBiosVersion)[1].ToString();
+                    }
+                }
             }
             return oMotherboard;
         }
