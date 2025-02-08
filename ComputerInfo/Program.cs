@@ -27,6 +27,9 @@ namespace ComputerInfo
             SvcBattery oSvcBattery = new SvcBattery();
             Console.WriteLine(oSvcBattery.GetTextInfo());
             Console.WriteLine(oSvcBattery.GetXmlElement().OuterXml);
+            SvcRAM oSvcRAM = new SvcRAM();
+            Console.WriteLine(oSvcRAM.GetTextInfo());
+            Console.WriteLine(oSvcRAM.GetXmlElement().OuterXml);
         }
     }
 }
