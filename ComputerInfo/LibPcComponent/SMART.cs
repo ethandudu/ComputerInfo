@@ -34,7 +34,7 @@ namespace ComputerInfo.LibPcComponent
         private int m_iDataRead;
         private int m_iDataWritten;
         private int m_iPowerOnCount;
-        private int m_iPowerOnHours;
+        private UInt64 m_iPowerOnHours;
         private ConnectionType m_eConnectionType;
         private DiskType m_eDiskType;
 
@@ -48,7 +48,7 @@ namespace ComputerInfo.LibPcComponent
             m_iDataRead = -1;
             m_iDataWritten = -1;
             m_iPowerOnCount = -1;
-            m_iPowerOnHours = -1;
+            m_iPowerOnHours = 0;
             m_eConnectionType = ConnectionType.UNKNOWN;
             m_eDiskType = DiskType.UNKNOWN;
         }
@@ -93,7 +93,7 @@ namespace ComputerInfo.LibPcComponent
             set { m_iPowerOnCount = value; }
         }
 
-        public int PowerOnHours
+        public UInt64 PowerOnHours
         {
             get { return m_iPowerOnHours; }
             set { m_iPowerOnHours = value; }

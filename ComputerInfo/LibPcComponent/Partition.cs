@@ -14,29 +14,13 @@ namespace ComputerInfo.LibPcComponent
         UNKNOWN
     }
 
-    enum FileSystem
-    {
-        FAT,
-        FAT32,
-        NTFS,
-        EXFAT,
-        EXT2,
-        EXT3,
-        EXT4,
-        HFS,
-        HFSPLUS,
-        APFS,
-        REFS,
-        UNKNOWN
-    }
-
     internal class Partition
     {
         private int m_iNumber;
         private string m_sName;
         private PartitionType m_eType;
-        private FileSystem m_eFileSystem;
-        private int m_iSize;
+        private string m_sFileSystem;
+        private UInt64 m_iSize;
         private int m_iUsedSpace;
         private int m_iFreeSpace;
         private int m_iAllocationUnitSize;
@@ -48,8 +32,8 @@ namespace ComputerInfo.LibPcComponent
             m_iNumber = -1;
             m_sName = string.Empty;
             m_eType = PartitionType.UNKNOWN;
-            m_eFileSystem = FileSystem.UNKNOWN;
-            m_iSize = -1;
+            m_sFileSystem = string.Empty;
+            m_iSize = 0;
             m_iUsedSpace = -1;
             m_iFreeSpace = -1;
             m_iAllocationUnitSize = -1;
@@ -77,13 +61,13 @@ namespace ComputerInfo.LibPcComponent
             set { m_eType = value; }
         }
 
-        public FileSystem FileSystem
+        public string FileSystem
         {
-            get { return m_eFileSystem; }
-            set { m_eFileSystem = value; }
+            get { return m_sFileSystem; }
+            set { m_sFileSystem = value; }
         }
 
-        public int Size
+        public UInt64 Size
         {
             get { return m_iSize; }
             set { m_iSize = value; }

@@ -8,7 +8,7 @@ namespace ComputerInfo.LibPcComponent
 {
     internal class Disk : BasePcComponent
     {
-        private int m_iSize;
+        private UInt64 m_iSize;
         private SMART m_oSMART;
         private Partition[] m_aPartitions;
 
@@ -16,7 +16,7 @@ namespace ComputerInfo.LibPcComponent
 
         public Disk()
         {
-            m_iSize = -1;
+            m_iSize = 0;
             m_oSMART = null;
             m_aPartitions = null;
         }
@@ -25,7 +25,7 @@ namespace ComputerInfo.LibPcComponent
 
         #region Properties
 
-        public int Size
+        public UInt64 Size
         {
             get { return m_iSize; }
             set { m_iSize = value; }
