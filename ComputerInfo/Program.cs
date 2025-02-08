@@ -20,6 +20,8 @@ namespace ComputerInfo
             //Application.Run(new Form1());
             SvcOs oSvcOS = new SvcOs();
             Console.WriteLine(oSvcOS.GetTextInfo());
+            SvcBattery oSvcBattery = new SvcBattery();
+            Console.WriteLine(oSvcBattery.GetTextInfo());
         }
     }
 }
