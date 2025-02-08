@@ -26,9 +26,13 @@ namespace ComputerInfo
             SvcOs oSvcOS = new SvcOs();
             SvcBattery oSvcBattery = new SvcBattery();
             SvcRAM oSvcRAM = new SvcRAM();
+            SvcCPU oSvcCpu = new SvcCPU();
 
             XmlDocument oXmlDocOS = new XmlDocument();
             oXmlDocOS.AppendChild(oXmlDocOS.ImportNode(oSvcOS.GetXmlElement(), true));
+
+            XmlDocument oXmlDocCpu = new XmlDocument();
+            oXmlDocCpu.AppendChild(oXmlDocCpu.ImportNode(oSvcCpu.GetXmlElement(), true));
 
             XmlDocument oXmlDocBattery = new XmlDocument();
             oXmlDocBattery.AppendChild(oXmlDocBattery.ImportNode(oSvcBattery.GetXmlElement(), true));
@@ -36,7 +40,7 @@ namespace ComputerInfo
             XmlDocument oXmlDocRAM = new XmlDocument();
             oXmlDocRAM.AppendChild(oXmlDocRAM.ImportNode(oSvcRAM.GetXmlElement(), true));
 
-            XmlDocument oXmlDoc = XmlHelper.MergeXmlDocuments(oXmlDocOS, oXmlDocBattery, oXmlDocRAM);
+            XmlDocument oXmlDoc = XmlHelper.MergeXmlDocuments(oXmlDocOS, oXmlDocCpu, oXmlDocBattery, oXmlDocRAM);
 
             // Formatted XML
             StringBuilder oStringBuilder = new StringBuilder();

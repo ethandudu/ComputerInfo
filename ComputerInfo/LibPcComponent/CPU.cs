@@ -8,10 +8,15 @@ namespace ComputerInfo.LibPcComponent
 {
     enum ArchitectureType
     {
-        x86,
-        x64,
-        ARM,
-        UNKNOWN
+        x86 = 0,
+        MIPS = 1,
+        Alpha = 2,
+        PowerPC = 3,
+        ARM = 5,
+        ia64 = 6,
+        x64 = 9,
+        ARM64 = 12,
+        UNKNOWN = -1
     }
     internal class CPU : BasePcComponent
     {
