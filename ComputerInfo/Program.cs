@@ -64,7 +64,17 @@ namespace ComputerInfo
                 oXmlDoc.WriteTo(oXmlWriter);
             }
 
-            FrmMain oFrmMain = new FrmMain(oStringBuilder.ToString());
+            // TreeView root node
+            TreeNode oTreeNode = new TreeNode("ComputerInfo");
+            oTreeNode.Nodes.Add(oSvcCpu.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvcRAM.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvgGPU.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvcDisk.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvcBattery.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvcMotherboard.GetTreeNode());
+            oTreeNode.Nodes.Add(oSvcOS.GetTreeNode());
+
+            FrmMain oFrmMain = new FrmMain(oStringBuilder.ToString(), oTreeNode);
             Application.Run(oFrmMain);
         }
     }

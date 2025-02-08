@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ComputerInfo.LibSvc
@@ -62,7 +63,37 @@ namespace ComputerInfo.LibSvc
 
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("OS");
+            oTreeNode.Tag = this;
+
+            // Child nodes
+            if (!string.IsNullOrEmpty(m_oOs.Name))
+            {
+                oTreeNode.Nodes.Add("Name", "Name: " + m_oOs.Name);
+            }
+
+            if (!string.IsNullOrEmpty(m_oOs.BuildVersion))
+            {
+                oTreeNode.Nodes.Add("BuildVersion", "Build Version: " + m_oOs.BuildVersion);
+            }
+
+            if (!string.IsNullOrEmpty(m_oOs.UserLogin))
+            {
+                oTreeNode.Nodes.Add("UserLogin", "User Login: " + m_oOs.UserLogin);
+            }
+
+            if (!string.IsNullOrEmpty(m_oOs.ComputerName))
+            {
+                oTreeNode.Nodes.Add("ComputerName", "Computer Name: " + m_oOs.ComputerName);
+            }
+
+            if (m_oOs.Architecture != Architecture.UNKNOWN)
+            {
+                oTreeNode.Nodes.Add("Architecture", "Architecture: " + m_oOs.Architecture);
+            }
+
+            return oTreeNode;
         }
 
         public static OS GetOs()

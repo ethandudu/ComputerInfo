@@ -6,6 +6,7 @@ using System.Management;
 using System.Xml;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ComputerInfo.LibSvc
 {
@@ -119,7 +120,54 @@ namespace ComputerInfo.LibSvc
 
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("GPUs");
+            oTreeNode.Tag = this;
+
+            // Add each GPU to the tree node
+            for (int i = 0; i < m_aoGPUs.Length; i++)
+            {
+                GPU oGPU = m_aoGPUs[i];
+                TreeNode oGPUNode = new TreeNode(oGPU.Name);
+                if (!String.IsNullOrEmpty(oGPU.Serial))
+                {
+                    TreeNode oSerialNode = new TreeNode("Serial: " + oGPU.Serial);
+                    oGPUNode.Nodes.Add(oSerialNode);
+                }
+                if (!String.IsNullOrEmpty(oGPU.DeviceID))
+                {
+                    TreeNode oDeviceIDNode = new TreeNode("Device ID: " + oGPU.DeviceID);
+                    oGPUNode.Nodes.Add(oDeviceIDNode);
+                }
+                if (!String.IsNullOrEmpty(oGPU.VideoProcessor))
+                {
+                    TreeNode oVideoProcessorNode = new TreeNode("Video Processor: " + oGPU.VideoProcessor);
+                    oGPUNode.Nodes.Add(oVideoProcessorNode);
+                }
+                if (oGPU.Ram.Capacity != 0)
+                {
+                    TreeNode oRAMNode = new TreeNode("RAM: " + oGPU.Ram.Capacity + " MB");
+                    oGPUNode.Nodes.Add(oRAMNode);
+                }
+                if (!String.IsNullOrEmpty(oGPU.Driver.BuildDate))
+                {
+                    TreeNode oDriverBuildDateNode = new TreeNode("Driver Build Date: " + oGPU.Driver.BuildDate);
+                    oGPUNode.Nodes.Add(oDriverBuildDateNode);
+                }
+                if (!String.IsNullOrEmpty(oGPU.Driver.Vendor))
+                {
+                    TreeNode oDriverVendorNode = new TreeNode("Driver Vendor: " + oGPU.Driver.Vendor);
+                    oGPUNode.Nodes.Add(oDriverVendorNode);
+                }
+                if (!String.IsNullOrEmpty(oGPU.Driver.BuildVersion))
+                {
+                    TreeNode oDriverBuildVersionNode = new TreeNode("Driver Build Version: " + oGPU.Driver.BuildVersion);
+                    oGPUNode.Nodes.Add(oDriverBuildVersionNode);
+                }
+                oTreeNode.Nodes.Add(oGPUNode);
+            }
+
+            return oTreeNode;
         }
 
         public static GPU[] GetGPUs()

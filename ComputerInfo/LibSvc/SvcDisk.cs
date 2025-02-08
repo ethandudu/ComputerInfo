@@ -7,6 +7,7 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ComputerInfo.LibSvc
@@ -119,7 +120,29 @@ namespace ComputerInfo.LibSvc
 
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Creates a new tree node
+            TreeNode oTreeNode = new TreeNode("Disks");
+
+            // Add each disk to the tree node
+            foreach (Disk oDisk in m_aoDisks)
+            {
+                TreeNode oDiskNode = new TreeNode(oDisk.Name);
+                oDiskNode.Nodes.Add("Size: " + oDisk.Size);
+                oDiskNode.Nodes.Add("Serial: " + oDisk.Serial);
+                oDiskNode.Nodes.Add("Vendor: " + oDisk.Vendor);
+                // Add each partition to the disk node
+                foreach (Partition oPartition in oDisk.Partitions)
+                {
+                    TreeNode oPartitionNode = new TreeNode(oPartition.Name);
+                    oPartitionNode.Nodes.Add("Size: " + oPartition.Size);
+                    oPartitionNode.Nodes.Add("FileSystem: " + oPartition.FileSystem);
+                    oPartitionNode.Nodes.Add("Allocation Unit Size: " + oPartition.AllocationUnitSize);
+                    oDiskNode.Nodes.Add(oPartitionNode);
+                }
+                oTreeNode.Nodes.Add(oDiskNode);
+            }
+
+            return oTreeNode;
         }
 
         public static Disk[] GetDisks()

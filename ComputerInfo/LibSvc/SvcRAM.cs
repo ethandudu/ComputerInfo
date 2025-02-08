@@ -6,6 +6,7 @@ using System.Management;
 using System.Xml;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ComputerInfo.LibSvc
 {
@@ -106,7 +107,46 @@ namespace ComputerInfo.LibSvc
         }
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("RAMs");
+            oTreeNode.Tag = this;
+
+            // Add each RAM to the tree node
+            foreach (RAM ram in m_aoRAMs)
+            {
+                TreeNode oRAMNode = new TreeNode(ram.Name);
+                if (!string.IsNullOrEmpty(ram.Serial))
+                {
+                    oRAMNode.Nodes.Add("Serial: " + ram.Serial);
+                }
+                if (ram.Frequency != Program.NOT_SET)
+                {
+                    oRAMNode.Nodes.Add("Frequency: " + ram.Frequency + " MHz");
+                }
+                if (ram.Capacity != 0)
+                {
+                    oRAMNode.Nodes.Add("Capacity: " + ram.Capacity + " MB");
+                }
+                if (ram.Type != RAMType.UNKNOWN)
+                {
+                    oRAMNode.Nodes.Add("Type: " + ram.Type);
+                }
+                if (ram.FormFactor != RAMFormFactor.UNKNOWN)
+                {
+                    oRAMNode.Nodes.Add("Form factor: " + ram.FormFactor);
+                }
+                if (!string.IsNullOrEmpty(ram.Vendor))
+                {
+                    oRAMNode.Nodes.Add("Vendor: " + ram.Vendor);
+                }
+                //if (ram.Slot != Program.NOT_SET)
+                //{
+                //    oRAMNode.Nodes.Add("Slot: " + ram.Slot);
+                //}
+                oTreeNode.Nodes.Add(oRAMNode);
+            }
+
+            return oTreeNode;
         }
         public static RAM[] GetRAMs()
         {

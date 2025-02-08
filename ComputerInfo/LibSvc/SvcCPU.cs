@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ComputerInfo.LibSvc
@@ -104,7 +105,53 @@ namespace ComputerInfo.LibSvc
         }
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("CPUs");
+            oTreeNode.Tag = this;
+
+            // Add each CPU to the tree node
+            foreach (CPU oCPU in m_aoCPUs)
+            {
+                TreeNode oCPUNode = new TreeNode(oCPU.Name);
+                if (!string.IsNullOrEmpty(oCPU.CPUID))
+                {
+                    oCPUNode.Nodes.Add("CPU ID: " + oCPU.CPUID);
+                }
+
+                if (oCPU.Architecture != ArchitectureType.UNKNOWN)
+                {
+                    oCPUNode.Nodes.Add("Architecture: " + oCPU.Architecture);
+                }
+
+                if (!string.IsNullOrEmpty(oCPU.Vendor))
+                {
+                    oCPUNode.Nodes.Add("Vendor: " + oCPU.Vendor);
+                }
+
+                if (oCPU.CoreCount != Program.NOT_SET)
+                {
+                    oCPUNode.Nodes.Add("Core count: " + oCPU.CoreCount);
+                }
+
+                if (oCPU.ThreadCount != Program.NOT_SET)
+                {
+                    oCPUNode.Nodes.Add("Thread count: " + oCPU.ThreadCount);
+                }
+
+                if (oCPU.MaxClock != Program.NOT_SET)
+                {
+                    oCPUNode.Nodes.Add("Max clock: " + oCPU.MaxClock + " MHz");
+                }
+
+                if (oCPU.CurrentClock != Program.NOT_SET)
+                {
+                    oCPUNode.Nodes.Add("Current clock: " + oCPU.CurrentClock + " MHz");
+                }
+
+                oTreeNode.Nodes.Add(oCPUNode);
+            }
+
+            return oTreeNode;
         }
         public static CPU[] GetCPUs()
         {

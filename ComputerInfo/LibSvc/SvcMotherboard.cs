@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Xml;
 
 namespace ComputerInfo.LibSvc
@@ -64,9 +65,32 @@ namespace ComputerInfo.LibSvc
         }
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("Motherboard");
+            oTreeNode.Tag = this;
+
+            if (!string.IsNullOrEmpty(m_oMotherboard.Name))
+            {
+                oTreeNode.Nodes.Add("Name: " + m_oMotherboard.Name);
+            }
+
+            if (!string.IsNullOrEmpty(m_oMotherboard.Vendor))
+            {
+                oTreeNode.Nodes.Add("Vendor: " + m_oMotherboard.Vendor);
+            }
+
+            if (!string.IsNullOrEmpty(m_oMotherboard.Serial))
+            {
+                oTreeNode.Nodes.Add("Serial: " + m_oMotherboard.Serial);
+            }
+
+            if (!string.IsNullOrEmpty(m_oMotherboard.BiosVersion))
+            {
+                oTreeNode.Nodes.Add("Bios Version: " + m_oMotherboard.BiosVersion);
+            }
+
+            return oTreeNode;
         }
-        // ...
 
         public static Motherboard GetMotherboard()
         {

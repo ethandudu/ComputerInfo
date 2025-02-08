@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ComputerInfo.LibSvc
 {
@@ -74,7 +75,45 @@ namespace ComputerInfo.LibSvc
         }
         public override System.Windows.Forms.TreeNode GetTreeNode()
         {
-            throw new NotImplementedException();
+            // Root node
+            TreeNode oTreeNode = new TreeNode("Batteries");
+            oTreeNode.Tag = this;
+            foreach (Battery battery in m_aoBatteries)
+            {
+                string sName = "Battery";
+                if (!string.IsNullOrEmpty(battery.Name))
+                {
+                    sName = battery.Name;
+                }
+                TreeNode oBatteryNode = new TreeNode(sName);
+
+                if (battery.BatteryLevel != Program.NOT_SET)
+                {
+                    TreeNode oBatteryLevelNode = new TreeNode("Battery Level: " + battery.BatteryLevel + "%");
+                    oBatteryNode.Nodes.Add(oBatteryLevelNode);
+                }
+
+                if (battery.BatteryCapacity != Program.NOT_SET)
+                {
+                    TreeNode oBatteryCapacityNode = new TreeNode("Battery Capacity: " + battery.BatteryCapacity + " mWh");
+                    oBatteryNode.Nodes.Add(oBatteryCapacityNode);
+                }
+
+                if (battery.BatteryState != BatteryState.Unknown)
+                {
+                    TreeNode oBatteryStateNode = new TreeNode("Battery State: " + battery.BatteryState);
+                    oBatteryNode.Nodes.Add(oBatteryStateNode);
+                }
+
+                if (battery.CycleCount != Program.NOT_SET)
+                {
+                    TreeNode oCycleCountNode = new TreeNode("Cycle Count: " + battery.CycleCount);
+                    oBatteryNode.Nodes.Add(oCycleCountNode);
+                }
+
+                oTreeNode.Nodes.Add(oBatteryNode);
+            }
+            return oTreeNode;
         }
         public static Battery[] GetBatteries()
         {
