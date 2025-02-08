@@ -9,6 +9,9 @@ namespace ComputerInfo
 {
     internal static class Program
     {
+        // Constant (-1) to indicate that an integer value is not set
+        public const int NOT_SET = -1;
+        
         /// <summary>
         /// Point d'entrée principal de l'application.
         /// </summary>
@@ -22,6 +25,7 @@ namespace ComputerInfo
             Console.WriteLine(oSvcOS.GetTextInfo());
             SvcBattery oSvcBattery = new SvcBattery();
             Console.WriteLine(oSvcBattery.GetTextInfo());
+            Console.WriteLine(oSvcBattery.GetXmlElement().OuterXml);
         }
     }
 }

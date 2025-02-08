@@ -1,6 +1,7 @@
 ﻿using ComputerInfo.LibPcComponent;
 using System;
 using System.Management;
+using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,45 @@ namespace ComputerInfo.LibSvc
         #region Properties
         #endregion
         #region Methods
-        public override System.Xml.XmlElement GetXmlElement()
+        public override XmlElement GetXmlElement()
         {
-            throw new NotImplementedException();
+            XmlDocument oXmlDocument = new XmlDocument();
+            XmlElement oXmlElement = oXmlDocument.CreateElement("Batteries");
+            foreach (Battery battery in m_aoBatteries)
+            {
+                XmlElement oBatteryElement = oXmlDocument.CreateElement("Battery");
+                
+                if (battery.BatteryLevel != Program.NOT_SET)
+                {
+                    XmlElement oBatteryLevelElement = oXmlDocument.CreateElement("BatteryLevel");
+                    oBatteryLevelElement.InnerText = battery.BatteryLevel.ToString();
+                    oBatteryElement.AppendChild(oBatteryLevelElement);
+                }
+                
+                if (battery.BatteryCapacity != Program.NOT_SET)
+                {
+                    XmlElement oBatteryCapacityElement = oXmlDocument.CreateElement("BatteryCapacity");
+                    oBatteryCapacityElement.InnerText = battery.BatteryCapacity.ToString();
+                    oBatteryElement.AppendChild(oBatteryCapacityElement);
+                }
+                
+                if (battery.BatteryState != BatteryState.Unknown)
+                {
+                    XmlElement oBatteryStateElement = oXmlDocument.CreateElement("BatteryState");
+                    oBatteryStateElement.InnerText = battery.BatteryState.ToString();
+                    oBatteryElement.AppendChild(oBatteryStateElement);
+                }
+
+                if (battery.CycleCount != Program.NOT_SET)
+                {
+                    XmlElement oCycleCountElement = oXmlDocument.CreateElement("CycleCount");
+                    oCycleCountElement.InnerText = battery.CycleCount.ToString();
+                    oBatteryElement.AppendChild(oCycleCountElement);
+                }
+
+                oXmlElement.AppendChild(oBatteryElement);
+            }
+            return oXmlElement;
         }
         public override string GetTextInfo()
         {
