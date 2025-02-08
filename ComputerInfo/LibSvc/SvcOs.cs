@@ -5,6 +5,7 @@ using System.Linq;
 using System.Management;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace ComputerInfo.LibSvc
 {
@@ -30,7 +31,28 @@ namespace ComputerInfo.LibSvc
 
         public override System.Xml.XmlElement GetXmlElement()
         {
-            throw new NotImplementedException();
+            XmlDocument oxMlDocument = new XmlDocument();
+            XmlElement oXmlElement = oxMlDocument.CreateElement("OS");
+            XmlElement oNameElement = oxMlDocument.CreateElement("Name");
+            oNameElement.InnerText = m_oOs.Name;
+            oXmlElement.AppendChild(oNameElement);
+
+            XmlElement oBuildVersionElement = oxMlDocument.CreateElement("BuildVersion");
+            oBuildVersionElement.InnerText = m_oOs.BuildVersion;
+            oXmlElement.AppendChild(oBuildVersionElement);
+
+            XmlElement oUserLoginElement = oxMlDocument.CreateElement("UserLogin");
+            oUserLoginElement.InnerText = m_oOs.UserLogin;
+            oXmlElement.AppendChild(oUserLoginElement);
+
+            XmlElement oComputerNameElement = oxMlDocument.CreateElement("ComputerName");
+            oComputerNameElement.InnerText = m_oOs.ComputerName;
+            oXmlElement.AppendChild(oComputerNameElement);
+
+            XmlElement oArchitectureElement = oxMlDocument.CreateElement("Architecture");
+            oArchitectureElement.InnerText = m_oOs.Architecture.ToString();
+            oXmlElement.AppendChild(oArchitectureElement);
+            return oXmlElement;
         }
 
         public override string GetTextInfo()
